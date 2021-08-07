@@ -25,7 +25,7 @@ function mix(s1, s2){
         }
     }
 
-    console.log(memoS1);
+    console.log(memoS1.length);
 
     for(i = 0; i < s2Split.length; i++){
 
@@ -38,25 +38,44 @@ function mix(s1, s2){
         }
     }
 
-    console.log(memoS2);
+    console.log(Object.keys(memoS2).length);
 
-    for(const value in memoS1){
+    if(Object.keys(memoS2).length <= Object.keys(memoS1).length){
 
-        if(memoS1[value] > memoS2[value]){
-            if(memoS1[value].length > 1){
-                arr.push(`1:${memoS1[value]}/`);         
+        for(const value in memoS1){
+
+            if(memoS1[value] > memoS2[value] || !memoS2[value]){
+                if(memoS1[value].length > 1){
+                    arr.push(`1:${memoS1[value]}/`);         
+                }
+            } else if (memoS1[value] < memoS2[value] || !memoS1[value]) {
+                if(memoS2[value].length > 1){
+                    arr.push(`2:${memoS2[value]}/`);   
+                }    
+            } else {
+                if(memoS1[value].length > 1){
+                    arr.push(`=:${memoS1[value]}/`); 
+                }       
             }
-        } else if (memoS1[value] < memoS2[value]) {
-            if(memoS2[value].length > 1){
-                arr.push(`2:${memoS2[value]}/`);   
-            }    
-        } else {
-            if(memoS1[value].length > 1){
-                arr.push(`=:${memoS1[value]}/`); 
-            }       
         }
-       
-    }
+    } else {
+        for(const value in memoS2){
+
+            if(memoS1[value] > memoS2[value] || !memoS2[value]){
+                if(memoS1[value].length > 1){
+                    arr.push(`1:${memoS1[value]}/`);         
+                }
+            } else if (memoS1[value] < memoS2[value] || !memoS1[value]) {
+                if(memoS2[value].length > 1){
+                    arr.push(`2:${memoS2[value]}/`);   
+                }    
+            } else {
+                if(memoS1[value].length > 1){
+                    arr.push(`=:${memoS1[value]}/`); 
+                }       
+            }
+        }
+    }       
     
     const answer = (arr.sort().sort(function(a,b){
 
@@ -66,9 +85,27 @@ function mix(s1, s2){
     const finalString = answer.substring(0, answer.length - 1);
 
     console.log(finalString);
-
     return finalString;
 
+}
+
+function biggerObj(obj){
+    for(const value in memoS1){
+
+        if(memoS1[value] > memoS2[value] || !memoS2[value]){
+            if(memoS1[value].length > 1){
+                arr.push(`1:${memoS1[value]}/`);         
+            }
+        } else if (memoS1[value] < memoS2[value] || !memoS1[value]) {
+            if(memoS2[value].length > 1){
+                arr.push(`2:${memoS2[value]}/`);   
+            }    
+        } else {
+            if(memoS1[value].length > 1){
+                arr.push(`=:${memoS1[value]}/`); 
+            }       
+        }
+    }
 }
 
 let s1 = "my&friend&Paul has heavy hats! &";
@@ -86,7 +123,12 @@ let s2 = "my friend John has many many friends &";
 
 // mix(s1, s2);
 
-s1 = "A generation must confront the looming ";
-s2 = "codewarrs";
+// s1 = "A generation must confront the looming ";
+// s2 = "codewarrs";
+
+// mix(s1, s2);
+
+s1 = " In many languages";
+s2 = " there's a pair of functions";
 
 mix(s1, s2);
